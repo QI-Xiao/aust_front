@@ -1,0 +1,47 @@
+<view class="container" wx:if="{{!hasUserInfo && canIUse}}">
+  <view class="userinfo">
+    <text class="userinfo-nickname" style='color: white;'>无</text>
+    <button class='userinfo-avatar' open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 登录 </button>
+    <button class='no-number' open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 获取用户编号 </button>
+  </view>
+</view>
+
+<block wx:else>
+  <view class="container" wx:if="{{!is_staff}}">
+    <view class="userinfo">
+      <text class="userinfo-nickname">{{userInfo.nickName}}</text>
+      <image class="userinfo-avatar" src="{{userInfo.avatarUrl}}" mode="cover"></image>
+      <view wx:if="{{is_identified == 2}}">
+        <view class='no-number text-user'> 用户编号 </view>
+        <view class='text-number'> {{user_number}} </view>
+
+        <block wx:if='{{remind_text}}'>
+          <button class='margin-50' bindtap='cencel_remind'> 取消预约通知 </button>
+          <view class='margin-20'>{{remind_text}}</view>
+        </block>
+        <form wx:else bindsubmit="formSubmit" report-submit='true'>
+          <button class='margin-50 bg-green' form-type="submit"> 预约到仓通知 </button>
+        </form>
+      </view>
+      <button class='no-number' wx:elif="{{is_identified == 0}}" bindtap='toform'> 获取用户编号 </button>
+      <button class='no-number' wx:elif="{{is_identified == 1}}" disabled='true'> 申请正在审核中，请等待 </button>
+      <button class='no-number' wx:else disabled='true'> 无法获得编号 </button>
+    </view>
+  </view>
+
+  <block wx:else>
+    <view class='staff-flex'>
+      <image class="avatar-little" src="{{userInfo.avatarUrl}}" mode="cover"></image>
+      <view class="nickname2">{{userInfo.nickName}}</view>
+    </view>
+    <button class='scan-css' bindtap='usescan'><text class="cuIcon-barcode lg text-sz" ></text></button>
+    <view class='text-flex' wx:if='{{oldcode}}'>
+      <view class='text-1'>最近{{oldstatus}}：</view>
+      <view class='text-2'>{{oldtime}} {{oldcode}} {{oldcategory}} {{oldcompany}}</view>
+    </view>
+    <!-- <view class='text-flex'>
+      <view class='text-1'>最后入库：</view>
+      <view class='text-2'>啊啊 法国恢复 ldcategory oldcompany</view>
+    </view> -->
+  </block>
+</block>

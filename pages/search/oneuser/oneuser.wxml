@@ -1,0 +1,41 @@
+<form bindsubmit="formSubmit">
+
+  <view class="cu-form-group">
+    <view class="title">开始日期</view>
+    <picker mode="date" value="{{date1}}" start="2019-01-01" end="2025-12-31" bindchange="DateChange1" name='date1'>
+      <view class="picker">
+        {{date1}}
+      </view>
+    </picker>
+  </view>
+
+  <view class="cu-form-group">
+    <view class="title">结束日期</view>
+    <picker mode="date" value="{{date2}}" start="2019-01-01" end="2025-12-31" bindchange="DateChange2" name='date2'>
+      <view class="picker">
+        {{date2}}
+      </view>
+    </picker>
+  </view>
+
+  <view class="cu-form-group">
+    <view class="title">用户编号</view>
+    <input placeholder="请输入原有4位用户编号" name='user_number'></input>
+  </view>
+
+  <view class="padding flex flex-direction">
+    <button class="cu-btn bg-green lg mar-bottom-20" form-type="submit">查询</button>
+  </view>
+</form>
+
+<view wx:for="{{goods_list}}" wx:key>
+  <view class='flex-goods'>
+    <view class='flex-1 bottom-20'>
+      <text>{{item[4]}}</text>
+      <!-- <text class="cuIcon-roundclosefill lg text-red" bindtap="deleteitem" data-id='{{item[0]}}' data-index='{{index}}'></text> -->
+    </view>
+    <view class='bottom-20'>{{item[3]}} {{item[1]}}</view>
+    <view>{{item[2]}}</view>
+  </view>
+  <view class="divLine"></view>
+</view>

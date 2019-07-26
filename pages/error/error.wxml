@@ -1,0 +1,22 @@
+<view class="page">
+    <view class="weui-msg">
+        <view class="weui-msg__icon-area">
+            <icon type="warn" size="93"></icon>
+        </view>
+
+        <view class="weui-msg__text-area">
+            <view class="weui-msg__title">操作失败</view>
+            <view class="weui-msg__desc">
+            {{errorinfo}}
+            </view>
+        </view>
+
+        <view class="weui-msg__opr-area">
+            <view class="weui-btn-area">
+                <button wx:if='{{!primary || primary==="undefined"}}' class="weui-btn" type="primary" bindtap="returnindex">返回主页</button>
+                <button wx:else class="weui-btn" type="primary" bindtap="toupdate">{{primary}}</button>
+                <button wx:if='{{dft_butt && dft_butt!=="undefined"}}' class="weui-btn" type="default" bindtap='returnindex'>{{dft_butt}}</button>
+            </view>
+        </view>
+    </view>
+</view>

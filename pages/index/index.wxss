@@ -1,0 +1,72 @@
+.userinfo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.userinfo-avatar {
+  width: 200rpx;
+  height: 200rpx;
+  margin: 20rpx;
+  border-radius: 50%;
+  box-shadow: 8rpx 2rpx 2px #cccccc;
+  line-height: 200rpx;
+  flex-basis: 40%;
+}
+.avatar-little {
+  width: 100rpx;
+  height: 100rpx;
+  border-radius: 50%;
+}
+
+.userinfo-nickname {
+  color: black;
+  font-size: 40rpx;
+  padding-bottom: 20rpx;
+  flex-basis: 20%;
+}
+.no-number{
+  margin-top: 30rpx;
+  width: 500rpx;
+}
+.text-user{
+  text-align: center;
+  font-size: 30rpx;
+  padding-bottom: 10rpx;
+}
+.text-number{
+  margin-top: 10rpx;
+  text-align: center;
+  font-size: 80rpx;
+  padding-bottom: 20rpx;
+}
+.margin-50{
+  margin-top: 50rpx;
+  width: 340rpx;
+}
+.margin-20{
+  margin-top: 20rpx;
+  font-size: 30rpx;
+  text-align: center;
+}
+.staff-flex{
+  margin: 30rpx;
+  display: flex;
+  align-content: flex-start;
+}
+.nickname2{
+  font-size: 32rpx;
+  line-height: 100rpx;
+  padding-left: 20rpx;
+}
+.scan-css{
+  margin: 30% auto;
+  width: 360rpx;
+  height: 360rpx;
+  border-radius: 5%;
+  background-color: white;
+  border-width: 10rpx;
+}
+.text-sz{
+  font-size: 200rpx;
+  line-height: 360rpx;
+}

@@ -1,0 +1,63 @@
+<button class='no-user' wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo" type='primary'> 获取头像昵称 </button>
+<block wx:else>
+  <view wx:if="{{!is_staff}}">
+    <view wx:if="{{is_identified == 2}}">
+      <button class='no-user2' wx:if='{{goods_list.length == 0}}' disabled='true'>暂无最近记录</button>
+      <view wx:else>
+        <view wx:for="{{goods_list}}" wx:key>
+          <view class='flex-goods'>
+            <view class='flex-1 bottom-20'>
+              <text>{{item[4]}}</text>
+              <text class="cuIcon-roundclosefill lg text-red" bindtap="deleteitem" data-id='{{item[0]}}' data-index='{{index}}'></text>
+            </view>
+            <view class='bottom-20'>{{item[3]}} {{item[1]}}</view>
+            <view>{{item[2]}}</view>
+          </view>
+          <view class="divLine"></view>
+        </view>
+      </view>
+      <view class='text-center' bindtap="all_goods">显示所有历史包裹</view>
+
+    </view>
+    <button class='no-user2' wx:elif="{{is_identified == 0}}" disabled='true'>首页"获取用户编号"并通过审核后查看</button>
+    <button class='no-user2' wx:elif="{{is_identified == 1}}" disabled='true'>通过审核后可查看</button>
+    <button class='no-user2' wx:elif="{{is_identified == -1}}" disabled='true'>暂时无法查看</button>
+  </view>
+  <view wx:else class="cu-list menu">
+    <view class="cu-item">
+      <button class="cu-btn content" bindtap="overview">
+        <view class="content">
+          <text class="cuIcon-list lg text-black"></text>
+          <text class="">包裹统计</text>
+        </view>
+        <view class="action">
+          <image src="/image/right.png" class='self-pix'></image>
+        </view>
+      </button>
+    </view>
+
+    <view class="cu-item">
+      <button class="cu-btn content" bindtap="oneuser">
+        <view class="content">
+          <text class="cuIcon-list lg text-black"></text>
+          <text class="">用户详情</text>
+        </view>
+        <view class="action">
+          <image src="/image/right.png" class='self-pix'></image>
+        </view>
+      </button>
+    </view>
+
+    <view class="cu-item">
+      <button class="cu-btn content" bindtap="refund">
+        <view class="content">
+          <text class="cuIcon-list lg text-black"></text>
+          <text class="">退货查询</text>
+        </view>
+        <view class="action">
+          <image src="/image/right.png" class='self-pix'></image>
+        </view>
+      </button>
+    </view>
+  </view>
+</block>

@@ -1,0 +1,8 @@
+<view class="page">
+  <view class="self-container_little">
+    <scroll-view scroll-y style="height: {{900+Hrpxleft}}rpx;">
+      <rich-text nodes="{{notice_content}}"></rich-text>
+    </scroll-view>
+  </view>
+  <button class="weui-btn self-btn" type="primary" bindtap="returnindex">返回主页</button>
+</view>

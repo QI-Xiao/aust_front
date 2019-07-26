@@ -1,0 +1,19 @@
+.self-pix {
+  width:40rpx;
+  height:40rpx;
+  display:flex;
+}
+.text-center{
+  padding-top: 30rpx; 
+  text-align: center;
+  text-decoration: underline;
+  color: blue;
+}
+.no-user{
+  margin-top: 50%;
+  width: 60%;
+}
+.no-user2{
+  margin-top: 50%;
+  width: 90%;
+}

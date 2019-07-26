@@ -1,0 +1,35 @@
+<form bindsubmit="formSubmit">
+
+  <view class="cu-form-group">
+    <view class="title">开始日期</view>
+    <picker mode="date" value="{{date1}}" start="2019-01-01" end="2025-12-31" bindchange="DateChange1" name='date1'>
+      <view class="picker">
+        {{date1}}
+      </view>
+    </picker>
+  </view>
+
+  <view class="cu-form-group">
+    <view class="title">结束日期</view>
+    <picker mode="date" value="{{date2}}" start="2019-01-01" end="2025-12-31" bindchange="DateChange2" name='date2'>
+      <view class="picker">
+        {{date2}}
+      </view>
+    </picker>
+  </view>
+
+  <view class="padding flex flex-direction">
+    <button class="cu-btn bg-green lg mar-bottom-20" form-type="submit">查询</button>
+  </view>
+</form>
+
+<view class="padding">
+  <view class="grid col-2 margin-bottom text-center">
+    <view class="padding bg-grey">品类</view>
+    <view class="padding bg-grey">数量</view>
+    <block wx:for="{{count_list}}" wx:key>
+      <view class="{{index%2==0?'bg-gray':'bg-white'}} padding">{{item[0]}}</view>
+      <view class="{{index%2==0?'bg-gray':'bg-white'}} padding">{{item[1]}}</view>
+    </block>
+  </view>
+</view>

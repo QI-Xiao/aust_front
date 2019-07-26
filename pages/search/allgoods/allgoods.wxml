@@ -1,0 +1,10 @@
+<view wx:for="{{goods_list}}" wx:key>
+  <view class='flex-goods'>
+    <view class='bottom-20'>
+      <text>{{item[4]}}</text>
+    </view>
+    <view class='bottom-20'>{{item[3]}} {{item[1]}}</view>
+    <view>{{item[2]}}</view>
+  </view>
+  <view class="divLine"></view>
+</view>

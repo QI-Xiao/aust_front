@@ -1,0 +1,35 @@
+<form bindsubmit="formSubmit">
+	<view class="cu-form-group margin-top">
+		<view class="title">电话</view>
+		<input placeholder="请输入悉尼本地电话" name='phone' type="number"></input>
+	</view>
+	<view class="cu-form-group">
+		<view class="title">姓名</view>
+		<input placeholder="姓名与澳洲驾驶证一致" name='user_name'></input>
+	</view>
+	<view class="cu-form-group">
+		<view class="title">微信</view>
+		<input placeholder="请输入微信号（非昵称）" name='wx_id'></input>
+	</view>
+	<view class="cu-form-group">
+		<view class="title">地址</view>
+		<input placeholder="请输入悉尼地址" name='address'></input>
+		<text class="cuIcon-locationfill text-orange"></text>
+	</view>
+
+  <view wx:if='{{old_new=="old"}}' class="cu-form-group">
+		<view class="title">用户编号</view>
+		<input placeholder="请输入原有4位用户编号" name='user_number'></input>
+	</view>
+
+  <radio-group class="block" name='agree'>
+		<view class="cu-form-group">
+			<view class="title">同意 <text bindtap='tonotice' data-item='haiyun'>《海运规则》</text> 和 <text bindtap='tonotice' data-item='mianze'>《免责条款》</text></view>
+			<radio value="t" bindtap='cheakit' checked='{{is_cheaked}}'></radio>
+		</view>
+	</radio-group>
+
+  <view class="padding flex flex-direction">
+    <button class="cu-btn bg-green lg" form-type="submit">注册</button>
+  </view>
+</form>

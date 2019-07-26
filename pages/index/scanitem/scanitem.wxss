@@ -1,0 +1,30 @@
+.before-box{
+  padding:1rpx 30rpx;
+  font-size:30rpx;
+  height:60rpx;
+  font-family:UICTFontTextStyleBody;
+  align-items:center;
+  line-height:60rpx;
+}
+.column {
+  flex-basis: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+.box {
+  display: flex;
+  flex-wrap: wrap;
+  align-content: space-between;
+  align-items:center;
+  justify-content:space-between;
+}
+.margin-left{
+  margin-left: 20rpx;
+}
+.delete{
+  padding-left: 300rpx;
+}
+.del-view{
+  display: flex;
+  justify-content: center;
+}

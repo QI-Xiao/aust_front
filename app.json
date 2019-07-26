@@ -1,0 +1,42 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/search/search",
+    "pages/index/newform/newform",
+    "pages/index/scanitem/scanitem",
+    "pages/index/notice/notice",
+    "pages/index/newform/new_old",
+    "pages/search/allgoods/allgoods",
+    "pages/search/oneuser/oneuser",
+    "pages/search/overview/overview",
+    "pages/search/refund/refund"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "backgroundColor": "#F8F8F8",
+    "navigationBarBackgroundColor": "#F8F8F8",
+    "navigationBarTitleText": "扫码入库",
+    "navigationBarTextStyle": "black"
+  },
+  "tabBar": {
+    "color": "#7A7E83",
+    "selectedColor": "#3cc51f",
+    "borderStyle": "black",
+    "backgroundColor": "#F8F8F8",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "iconPath": "image/main.png",
+        "selectedIconPath": "image/main_green.png",
+        "text": "主页"
+      },
+      {
+        "pagePath": "pages/search/search",
+        "iconPath": "image/setting.png",
+        "selectedIconPath": "image/setting_green.png",
+        "text": "查询"
+      }
+    ]
+  },
+  "sitemapLocation": "sitemap.json"
+}

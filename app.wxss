@@ -1,0 +1,49 @@
+@import "colorui/icon.wxss";
+@import "colorui/main.wxss";
+
+.container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20% 0;
+  box-sizing: border-box;
+} 
+.flex-goods{
+  display: flex;
+  flex-direction: column;
+  font-size: 34rpx;
+  padding: 30rpx;
+}
+.flex-1{
+  display: flex;
+  justify-content: space-between;
+}
+.bottom-20{
+  padding-bottom: 20rpx;
+}
+.divLine{
+ background: #E0E3DA;
+ width: 750rpx;
+ height: 5rpx;
+}
+.mar-bottom-20{
+  margin-bottom: 20rpx;
+}
+.weui-btn{
+  width: 80%;
+}
+.text-flex{
+  margin: 30rpx 30rpx 0;
+  display: flex;
+  flex-direction: column;
+  font-size: 34rpx;
+}
+.text-1{
+  font-weight: bold;
+  margin-bottom: 12rpx;
+}
+.text-2{
+  margin-bottom: 12rpx;
+}
