@@ -1,4 +1,4 @@
-<button class='no-user' wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo" type='primary'> 获取头像昵称 </button>
+<button class='no-user2' wx:if="{{!hasUserInfo}}" disabled='true'>首页"获取用户编号"并通过审核后查看</button>
 <block wx:else>
   <view wx:if="{{!is_staff}}">
     <view wx:if="{{is_identified == 2}}">
@@ -11,7 +11,7 @@
               <text class="cuIcon-roundclosefill lg text-red" bindtap="deleteitem" data-id='{{item[0]}}' data-index='{{index}}'></text>
             </view>
             <view class='bottom-20'>{{item[3]}} {{item[1]}}</view>
-            <view>{{item[2]}}</view>
+            <view>{{item[5]}} {{item[2]}}</view>
           </view>
           <view class="divLine"></view>
         </view>
@@ -39,7 +39,7 @@
     <view class="cu-item">
       <button class="cu-btn content" bindtap="oneuser">
         <view class="content">
-          <text class="cuIcon-list lg text-black"></text>
+          <text class="cuIcon-text lg text-black"></text>
           <text class="">用户详情</text>
         </view>
         <view class="action">
@@ -51,7 +51,7 @@
     <view class="cu-item">
       <button class="cu-btn content" bindtap="refund">
         <view class="content">
-          <text class="cuIcon-list lg text-black"></text>
+          <text class="cuIcon-refund lg text-black"></text>
           <text class="">退货查询</text>
         </view>
         <view class="action">

@@ -50,6 +50,8 @@ Page({
     oldcompany: '',
     oldstatus: '',
     can_auto_identify: false,
+    confirm_text: '录入并继续',
+    status: 1,
   },
 
   onLoad: function (options) {
@@ -57,6 +59,7 @@ Page({
     this.setData({
       code: options.code,
       index_end: "" + this.data.picker.length - 1,
+      cookie: app.globalData.cookie,
     })
 
     if (options.oldcode) {
@@ -69,8 +72,65 @@ Page({
       })
     }
 
+    this.get_api()
+
+    common.req_com.post(
+      'goods/exist/', { 'cookie': this.data.cookie, 'code': this.data.code}
+    ).then(res => {
+      console.log(res)
+      var status = res.status
+      if (status == 0) {
+        return
+      } else if (status == 1 || status == 2) {
+        this.setData({
+          confirm_text: '修改并继续',
+          status: 2,
+        })
+        wx.showModal({
+          content: '用户：' + res.user1 + '，订单号：' + res.code + ' 的包裹已经入库，是否需要继续操作？',
+          showCancel: true,
+          cancelText: '继续操作',
+          cancelColor: '#ff0000',
+          confirmText: "取消",
+          success(res) {
+            if (res.confirm) {
+              wx.reLaunch({
+                url: '/pages/index/index',
+              })
+            } else if (res.cancel) {
+              return
+            }
+          }
+        });
+      } else if (status == 4) {
+        wx.showModal({
+          content: '用户：' + res.user1 + '，订单号：' + res.code + ' 的包裹已经退货，请勿重复操作',
+          showCancel: false,
+          confirmText: "确定",
+          success: function (res) {
+            wx.reLaunch({
+              url: '/pages/index/index',
+            })
+          }
+        });
+      }
+    }).catch(e => {
+      wx.showModal({
+        content: e.error,
+        showCancel: false,
+        confirmText: "确定",
+        success: function (res) {
+          wx.reLaunch({
+            url: '/pages/index/index',
+          })
+        }
+      });
+    })
+  },
+
+  get_api: function() {
     wx.request({
-      url: 'https://www.kuaidi100.com/autonumber/autoComNum?text=' + options.code,
+      url: 'https://www.kuaidi100.com/autonumber/autoComNum?text=' + this.data.code,
       // url: 'https://www.kuaidi100.com/autonumber/autoComNum?text=' +'SF1000674348493',
       success: res => {
         console.log('res.data', res.data)
@@ -179,6 +239,7 @@ Page({
       obj['items'] = this.data.add_item.length
       obj['cookie'] = app.globalData.cookie
       obj['category'] = this.data.picker[obj['category']]
+      obj['status'] = this.data.status
 
       console.log(obj)
 
@@ -189,19 +250,18 @@ Page({
 
         var last_str = 'oldcode=' + res.code + '&time=' + res.time + '&category=' + res.category + '&company=' + res.company + '&status=' + res.status
 
-        if (dataset.toindex == 't') {
-          wx.reLaunch({
-            url: '/pages/index/index?' + last_str,
-          })
-        } else {
-          wx.scanCode({
-            success: function (res) {
-              wx.redirectTo({
-                url: 'scanitem?code=' + res['result'] + '&' + last_str,
-              })
-            },
-          })
-        }
+        wx.scanCode({
+          success: function (res) {
+            wx.redirectTo({
+              url: 'scanitem?code=' + res['result'] + '&' + last_str,
+            })
+          },
+          fail: function () {
+            wx.reLaunch({
+              url: '/pages/index/index?' + last_str,
+            })
+          },
+        })
       }).catch(e => {
         wx.showModal({
           content: e.error,

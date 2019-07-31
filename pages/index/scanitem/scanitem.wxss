@@ -28,3 +28,14 @@
   display: flex;
   justify-content: center;
 }
+.self-style{
+  margin-left: initial;
+  margin-top:40rpx;
+  color: red;
+  height:80rpx;
+  text-decoration: underline;
+  background-color: white;
+}
+.self-style::after{
+  border: none;
+}

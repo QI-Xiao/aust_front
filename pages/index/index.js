@@ -121,6 +121,11 @@ Page({
     })
   },
 
+  refresh: function() {
+    app.requestinf()
+    this.onLoad({ 'refresh': true })
+  },
+
   formSubmit: function (e) {
     common.req_com.get(
       'time/get/', {}
@@ -176,9 +181,16 @@ Page({
     })
   },
 
-  onPullDownRefresh: function () {
-    app.requestinf()
-    this.onLoad({ 'refresh': true })
-    wx.stopPullDownRefresh()
+  copyit: function() {
+    wx.setClipboardData({
+      data: '浙江省金华市义乌市后宅街道下畈新村群英二区',
+      success(res) {
+        wx.getClipboardData({
+          success(res) {
+            console.log(res.data) // data
+          }
+        })
+      }
+    })
   },
 })

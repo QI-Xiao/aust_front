@@ -35,7 +35,7 @@
       <!-- <text class="cuIcon-roundclosefill lg text-red" bindtap="deleteitem" data-id='{{item[0]}}' data-index='{{index}}'></text> -->
     </view>
     <view class='bottom-20'>{{item[3]}} {{item[1]}}</view>
-    <view>{{item[2]}}</view>
+    <view>{{item[5]}} {{item[2]}}</view>
   </view>
   <view class="divLine"></view>
 </view>
