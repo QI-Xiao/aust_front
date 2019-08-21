@@ -9,13 +9,15 @@
     "pages/search/allgoods/allgoods",
     "pages/search/oneuser/oneuser",
     "pages/search/overview/overview",
-    "pages/search/refund/refund"
+    "pages/search/refund/refund",
+    "pages/search/allrefunds/allrefunds",
+    "pages/search/refund/allrefund"
   ],
   "window": {
     "backgroundTextStyle": "light",
     "backgroundColor": "#F8F8F8",
     "navigationBarBackgroundColor": "#F8F8F8",
-    "navigationBarTitleText": "扫码入库",
+    "navigationBarTitleText": "海运入库",
     "navigationBarTextStyle": "black"
   },
   "tabBar": {

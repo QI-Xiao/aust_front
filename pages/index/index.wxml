@@ -1,48 +1,67 @@
-<view class="container" wx:if="{{!hasUserInfo && canIUse}}">
+<view wx:if="{{!hasUserInfo && canIUse}}">
   <view class="userinfo">
-    <text class="userinfo-nickname" style='color: white;'>无</text>
-    <button class='userinfo-avatar' open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 登录 </button>
-    <button class='no-number' open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 获取用户编号 </button>
+    <button class='userinfo-avatar2' open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 登录 </button>
   </view>
 </view>
 
 <block wx:else>
-  <view class="container" wx:if="{{!is_staff}}">
-    <view class="userinfo">
-      <text class="userinfo-nickname">{{userInfo.nickName}}</text>
-      <image class="userinfo-avatar" src="{{userInfo.avatarUrl}}" mode="cover"></image>
-      <view wx:if="{{is_identified == 2}}">
-        <view class='no-number text-user'> 用户编号 </view>
-        <view class='text-number'> {{user_number}} </view>
+  <block wx:if="{{!is_staff}}">
+    <view class="container" wx:if="{{is_identified == 2}}">
+      <view class="userinfo">
+        <text class="userinfo-nickname">{{userInfo.nickName}}</text>
+        <image class="userinfo-avatar" src="{{userInfo.avatarUrl}}" mode="cover"></image>
+        <view>
+          <view class='no-number text-user'> 用户编号 </view>
+          <view class='text-number'> {{user_number}} </view>
 
-        <block wx:if='{{remind_text}}'>
-          <button class='margin-50' bindtap='cencel_remind'> 取消预约通知 </button>
-          <view class='margin-20'>{{remind_text}}</view>
-        </block>
-        <form wx:else bindsubmit="formSubmit" report-submit='true'>
-          <button class='margin-50 bg-green' form-type="submit"> 预约到仓通知 </button>
-        </form>
-        <view class="weui-footer weui-footer_fixed-bottom">
-          <view class="weui-footer__text">海运寄送地址（<text class='copy-style' bindtap='copyit'>复制地址</text>）：</view>
-          <view class="weui-footer__text">浙江省金华市义乌市后宅街道下畈新村群英二区</view>
+          <!-- <block wx:if='{{remind_text}}'>
+            <button class='margin-50' bindtap='cencel_remind'> 取消预约通知 </button>
+            <view class='margin-20'>{{remind_text}}</view>
+          </block>
+          <form wx:else bindsubmit="formSubmit" report-submit='true'>
+            <button class='margin-50 bg-green' form-type="submit"> 预约到仓通知 </button>
+          </form> -->
+
+          <view wx:if='{{info_address}}' class="weui-footer weui-footer_fixed-bottom">
+            <view class="weui-footer__text" style="padding-bottom: 20rpx;">海运寄送地址（<text class='copy-style' bindtap='copyit'>点击复制</text>）：</view>
+            <view class="weui-footer__text">{{info_address}}</view>
+            <view class="weui-footer__text">收件人：{{info_person[0]}}<text style='font-weight:bold;'>{{info_person[1]}}</text>{{info_person[2]}}</view>
+            <!-- <view class="weui-footer__text" style="display: flex; justify-content: space-around;">
+              <view>电话：{{info_phone}} <text class='copy-style' bindtap='copyit' data-content="{{info_phone}}">复制</text></view>
+              <view>邮编：{{info_ZIPcode}} <text class='copy-style' bindtap='copyit' data-content="{{info_ZIPcode}}">复制</text></view>
+            </view> -->
+            <view class="weui-footer__text">电话：{{info_phone}}<text decode="true">&emsp;&emsp;</text>邮编：{{info_ZIPcode}}</view>
+            <view class="weui-footer__text footer-info">{{info_text}}</view>
+            <view class="weui-footer__text footer-guize" bindtap="tonotice">《wiseBUY海运拼柜规则》</view>
+          </view>
         </view>
       </view>
-      <button class='no-number' wx:elif="{{is_identified == 0}}" bindtap='toform'> 获取用户编号 </button>
-      <button class='no-number' wx:elif="{{is_identified == 1}}" bindtap='refresh'> 申请审核中，点击刷新进度 </button>
-      <button class='no-number' wx:else disabled='true'> 无法获得编号 </button>
     </view>
-  </view>
+
+    <view class="container" wx:else style="padding: 36% 0;">
+      <view class="userinfo">
+        <text class="userinfo-nickname">{{userInfo.nickName}}</text>
+        <image class="userinfo-avatar" src="{{userInfo.avatarUrl}}" mode="cover"></image>
+
+        <button class='no-number' wx:if="{{is_identified == 0}}" bindtap='toform'> 获取用户编号 </button>
+        <block wx:elif="{{is_identified == 1}}">
+          <button class='no-number' bindtap='refresh'> 刷新 </button>
+          <text style="margin-top: 30rpx;">申请已提交，请联系客服进行审核</text>
+        </block>
+        <button class='no-number' wx:else disabled='true'> 无法获得编号 </button>
+      </view>
+    </view>
+  </block>
 
   <block wx:else>
     <view class='staff-flex'>
       <image class="avatar-little" src="{{userInfo.avatarUrl}}" mode="cover"></image>
       <view class="nickname2">{{userInfo.nickName}}</view>
     </view>
-    <!-- <button class='scan-css' bindtap='usescan'><text class="cuIcon-barcode lg text-sz" ></text></button> -->
     <button class='scan-css' bindtap='usescan'><image src="/image/scancode.jpg" class='self-pix'></image></button>
     <view class='text-flex' wx:if='{{oldcode}}'>
       <view class='text-1'>最近{{oldstatus}}：</view>
-      <view class='text-2'>{{oldtime}} {{oldcode}} {{oldcategory}} {{oldcompany}}</view>
+      <view class='text-2'>{{oldtime}} {{oldbelong}} {{oldcategory}} {{oldcode}} {{oldcompany}}</view>
     </view>
   </block>
 </block>

@@ -46,9 +46,16 @@ App({
                           this.globalData.is_staff = info.is_staff
                           this.globalData.is_identified = info.is_identified
                           this.globalData.user_number = info.user_number
-                          this.globalData.remind_text = info.remind_text
+                          // this.globalData.remind_text = info.remind_text
                           this.globalData.date1 = info.date1
                           this.globalData.date2 = info.date2
+                          if (info.info_address) {
+                            this.globalData.info_address = info.info_address
+                            this.globalData.info_person = info.info_person
+                            this.globalData.info_phone = info.info_phone
+                            this.globalData.info_ZIPcode = info.info_ZIPcode
+                            this.globalData.info_text = info.info_text
+                          }
                           this.globalData.userInfo = thisglobalDatauserInfo
 
                           // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
@@ -60,8 +67,13 @@ App({
                               is_staff: this.globalData.is_staff,
                               is_identified: this.globalData.is_identified,
                               user_number: this.globalData.user_number,
-                              remind_text: this.globalData.remind_text,
+                              // remind_text: this.globalData.remind_text,
                               userInfo: this.globalData.userInfo,
+                              info_address: this.globalData.info_address,
+                              info_person: this.globalData.info_person,
+                              info_phone: this.globalData.info_phone,
+                              info_ZIPcode: this.globalData.info_ZIPcode,
+                              info_text: this.globalData.info_text,
                             }
                             this.userInfoReadyCallback(resadd)
                           }
@@ -97,11 +109,17 @@ App({
     is_identified: false,
     userInfo: null,
     user_number: '',
-    remind_text: '',
+    // remind_text: '',
     date1: '',
     date2: '',
     Hrpxleft: 0,
-    // domain: 'http://127.0.0.1:8000/aust/',
-    domain: 'https://aus.python666.cn/aust/',
+    domain: 'http://127.0.0.1:8000/aust/',
+    // domain: 'https://aus.python666.cn/aust/',
+    version: '0.9.5',
+    info_address: '',
+    info_person: [],
+    info_phone: '',
+    info_ZIPcode: '',
+    info_text: '',
   }
 })

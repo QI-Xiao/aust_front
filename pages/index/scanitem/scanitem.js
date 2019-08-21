@@ -4,7 +4,7 @@ Page({
   data: {
     cookie: '',
     code: '',
-    picker: ['图书', '衣物', '化妆品', '其它'],
+    picker: [],
     noticetext: {
       'user_number': '请输入用户4位编号',
       'code': '请输入订单号',
@@ -44,6 +44,7 @@ Page({
     index_end: '-1',
     company: '',
     add_item: [1],
+    oldbelong: '',
     oldtime: '',
     oldcategory: '',
     oldcode: '',
@@ -52,18 +53,19 @@ Page({
     can_auto_identify: false,
     confirm_text: '录入并继续',
     status: 1,
+    code_origin: '',
   },
 
   onLoad: function (options) {
     console.log(options)
     this.setData({
       code: options.code,
-      index_end: "" + this.data.picker.length - 1,
       cookie: app.globalData.cookie,
     })
 
     if (options.oldcode) {
       this.setData({
+        oldbelong: options.belong,
         oldtime: options.time,
         oldcategory: options.category,
         oldcode: options.oldcode,
@@ -78,13 +80,16 @@ Page({
       'goods/exist/', { 'cookie': this.data.cookie, 'code': this.data.code}
     ).then(res => {
       console.log(res)
+      this.setData({
+        picker: res.cate_all,
+        index_end: res.cate_len,
+      })
       var status = res.status
       if (status == 0) {
         return
       } else if (status == 1 || status == 2) {
         this.setData({
           confirm_text: '修改并继续',
-          status: 2,
         })
         wx.showModal({
           content: '用户：' + res.user1 + '，订单号：' + res.code + ' 的包裹已经入库，是否需要继续操作？',
@@ -92,12 +97,14 @@ Page({
           cancelText: '继续操作',
           cancelColor: '#ff0000',
           confirmText: "取消",
-          success(res) {
+          success:res => {
             if (res.confirm) {
               wx.reLaunch({
                 url: '/pages/index/index',
               })
             } else if (res.cancel) {
+              this.data.status = 2
+              this.data.code_origin = options.code
               return
             }
           }
@@ -173,103 +180,78 @@ Page({
     console.log(e.detail.value)
     
     var obj = e.detail.value
-    var dataset = e.detail.target.dataset
+    var refund = e.detail.target.dataset.refund
 
-    if (dataset.refund == 't') {
-      wx.showModal({
-        content: '确定要退货吗？',
-        showCancel: true,
-        confirmText: "确定",
-        success: function (res) {
-          if (res.confirm) {
-            console.log(obj.code)
-
-            common.req_com.post(
-              'goods/refund/', {'code': obj.code, 'cookie': app.globalData.cookie}
-            ).then(res => {
-              var last_str = 'oldcode=' + res.code + '&time=' + res.time + '&category=' + res.category + '&company=' + res.company + '&status=' + res.status
-
-              wx.showModal({
-                content: res.text,
-                showCancel: true,
-                confirmText: "继续扫码",
-                cancelText: "返回首页",
-                success: res2 => {
-                  if (res2.confirm) {
-                    wx.scanCode({
-                      success: function (res) {
-                        wx.redirectTo({
-                          url: 'scanitem?code=' + res['result'] + '&' + last_str,
-                        })
-                      },
-                    })                   
-                  } else if (res2.cancel) {
-                    wx.reLaunch({
-                      url: '/pages/index/index?' + last_str,
-                    })
-                  }
-                }
-              });
-            }).catch(e => {
-              wx.showModal({
-                content: e.error,
-                showCancel: false,
-                confirmText: "确定",
-              });
-            })
-          } else if (res.cancel) {
-            return
-          }
-        }
-      });
-    } else {
+    if (!refund || this.data.code_origin !== obj.code) {
       for (var i in obj) {
         if (!obj[i].trim()) {
           wx.showModal({
             content: this.data.noticetext[i],
             showCancel: false,
             confirmText: "确定",
-            success: function (res) {
+            success: res => {
             }
           });
           return
         }
       }
-
       obj['items'] = this.data.add_item.length
-      obj['cookie'] = app.globalData.cookie
       obj['category'] = this.data.picker[obj['category']]
+      var url = 'goods/in/'
+    } else {
+      var url = 'goods/refund/'
+    }
+
+    obj['cookie'] = app.globalData.cookie
+    console.log('obj', obj)
+
+    if (refund == 't') {
+      wx.showModal({
+        content: '确定要退货吗？',
+        showCancel: true,
+        confirmText: "确定",
+        success: res => {
+          if (res.confirm) {
+            obj['status'] = 4
+            this.goods_in(url, obj)
+          }
+        }
+      });
+    } else {
       obj['status'] = this.data.status
+      this.goods_in(url, obj)
+    }
+  },
 
-      console.log(obj)
+  goods_in: function (url, obj) {
+    common.req_com.post(
+      url, obj
+    ).then(res => {
+      console.log(res)
 
-      common.req_com.post(
-        'goods/in/', e.detail.value
-      ).then(res => {
-        console.log(res)
+      var last_str = 'oldcode=' + res.code + '&time=' + res.time + '&category=' + res.category + '&company=' + res.company + '&status=' + res.status + '&belong=' + res.belong
 
-        var last_str = 'oldcode=' + res.code + '&time=' + res.time + '&category=' + res.category + '&company=' + res.company + '&status=' + res.status
-
-        wx.scanCode({
-          success: function (res) {
-            wx.redirectTo({
-              url: 'scanitem?code=' + res['result'] + '&' + last_str,
-            })
-          },
-          fail: function () {
+      wx.scanCode({
+        success: res => {
+          wx.redirectTo({
+            url: 'scanitem?code=' + res['result'] + '&' + last_str,
+          })
+        },
+        fail: res => {
+          setTimeout(function () {
             wx.reLaunch({
               url: '/pages/index/index?' + last_str,
             })
-          },
-        })
-      }).catch(e => {
-        wx.showModal({
-          content: e.error,
-          showCancel: false,
-          confirmText: "确定",
-        });
+          }, 200)
+        },
       })
-    }
+    }).catch(e => {
+      wx.showModal({
+        content: e.error,
+        showCancel: false,
+        confirmText: "确定",
+      });
+    })
   },
 
   add: function() {

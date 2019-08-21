@@ -1,7 +1,7 @@
 <form bindsubmit="formSubmit">
   <view class='text-flex' style='font-size: 28rpx' wx:if='{{oldcode}}'>
     <view class='text-1'>最近{{oldstatus}}：</view>
-    <view class='text-2'>{{oldtime}} {{oldcode}} {{oldcategory}} {{oldcompany}}</view>
+    <view class='text-2'>{{oldtime}} {{oldbelong}} {{oldcategory}} {{oldcode}} {{oldcompany}}</view>
   </view>
 
   <!-- <view class='text-flex' style='font-size: 28rpx'>
@@ -38,14 +38,14 @@
 
 	<view class="cu-form-group">
 		<view class="title">数量</view>
-		<input placeholder="请输入数量" name='quantity' type='number'></input>
+		<input placeholder="请输入数量" name='quantity' type='number' value="1"></input>
 	</view>
 
   <view wx:for='{{add_item}}' wx:key>
     <view class='before-box margin-top'>
-      <text>包裹中箱子{{item}}</text>
-      <button class="cu-btn bg-blue light margin-left" bindtap='add'>增加长宽高</button>
-      <button wx:if='{{index > 0}}' class="cu-btn bg-blue light margin-left" bindtap='minus'>减少长宽高</button>
+      <text>第{{item}}箱 </text>
+      <button class="cu-btn bg-blue light margin-left" bindtap='add'>增加箱数</button>
+      <button wx:if='{{index > 0}}' class="cu-btn bg-blue light margin-left" bindtap='minus'>减少箱数</button>
     </view>
     <view class="box">
       <view class="column">

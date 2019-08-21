@@ -1,0 +1,11 @@
+<view wx:for="{{goods_list}}" wx:key>
+  <view class='flex-goods'>
+    <view class='flex-1 bottom-20'>
+      <text>用户（种类）：{{item[6]}}（{{item[4]}}）</text>
+    </view>
+    <view class='bottom-20'>{{item[3]}} {{item[1]}}</view>
+    <view class='bottom-20'>入库时间：{{item[2]}}</view>
+    <view>退货时间：{{item[5]}}</view>
+  </view>
+  <view class="divLine"></view>
+</view>

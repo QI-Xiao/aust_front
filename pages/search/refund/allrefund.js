@@ -1,30 +1,26 @@
 const app = getApp()
 var common = require('../../../utils/common.js')
 Page({
-
   data: {
-    notice_content: '',
-    Hrpxleft: app.globalData.Hrpxleft,
+    goods_list: [],
   },
 
-  onLoad: function (options) {
+  onLoad: function () {
+    var data = {
+      'cookie': app.globalData.cookie,
+      'all': true,
+    }
     common.req_com.post(
-      'notice/', { 'item': options.item}
+      'goods/list/refund/', data
     ).then(res => {
       console.log(res)
       this.setData({
-        notice_content: res.data,
+        goods_list: res.goods_list,
       })
     }).catch(e => {
       wx.navigateTo({
         url: '/pages/error/error?error=' + e.error,
       })
-    })
-  },
-
-  returnindex: function () {
-    wx.navigateBack({
-      delta: 1,
     })
   },
 })

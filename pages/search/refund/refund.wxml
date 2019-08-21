@@ -28,7 +28,7 @@
   <view class='flex-goods'>
     <view class='flex-1 bottom-20'>
       <text>用户（种类）：{{item[6]}}（{{item[4]}}）</text>
-      <!-- <text class="cuIcon-roundclosefill lg text-red" bindtap="deleteitem" data-id='{{item[0]}}' data-index='{{index}}'></text> -->
+      <text class="cuIcon-roundclosefill lg text-red" bindtap="deleteitem" data-id='{{item[0]}}' data-index='{{index}}'></text>
     </view>
     <view class='bottom-20'>{{item[3]}} {{item[1]}}</view>
     <view class='bottom-20'>入库时间：{{item[2]}}</view>
@@ -36,3 +36,4 @@
   </view>
   <view class="divLine"></view>
 </view>
+<view class='text-center link-css' bindtap="all_goods">显示所有历史包裹</view>

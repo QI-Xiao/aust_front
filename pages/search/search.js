@@ -19,12 +19,16 @@ Page({
       var refresh = options.refresh
     }
     if (app.globalData.userInfo) {
+      var is_identified = app.globalData.is_identified
+      var is_staff = app.globalData.is_staff
       this.setData({
         hasUserInfo: true,
-        is_identified: app.globalData.is_identified,
-        is_staff: app.globalData.is_staff,
+        is_identified: is_identified,
+        is_staff: is_staff,
       })
-      this.item_list(app.globalData.cookie, app.globalData.is_staff)
+      if (!is_staff && is_identified === 2) {
+        this.item_list(app.globalData.cookie)
+      }
       if (refresh === true) {
         wx.showToast({
           title: '数据已更新',
@@ -35,21 +39,19 @@ Page({
     }
   },
 
-  item_list: function(cookie, is_staff) {
-    if (!is_staff) {
-      common.req_com.post(
-        'goods/list/', { 'cookie': cookie }
-      ).then(res => {
-        console.log(res)
-        this.setData({
-          goods_list: res.goods_list,
-        })
-      }).catch(e => {
-        wx.navigateTo({
-          url: '/pages/error/error?error=' + e.error,
-        })
+  item_list: function(cookie) {
+    common.req_com.post(
+      'goods/list/', { 'cookie': cookie }
+    ).then(res => {
+      console.log(res)
+      this.setData({
+        goods_list: res.goods_list,
       })
-    }
+    }).catch(e => {
+      wx.navigateTo({
+        url: '/pages/error/error?error=' + e.error,
+      })
+    })
   },
 
   deleteitem: function(e) {
