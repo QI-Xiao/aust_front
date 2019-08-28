@@ -27,7 +27,7 @@
 <view wx:for="{{goods_list}}" wx:key>
   <view class='flex-goods'>
     <view class='flex-1 bottom-20'>
-      <text>用户（种类）：{{item[6]}}（{{item[4]}}）</text>
+      <text>{{item[6]}} {{item[4]}}</text>
       <text class="cuIcon-roundclosefill lg text-red" bindtap="deleteitem" data-id='{{item[0]}}' data-index='{{index}}'></text>
     </view>
     <view class='bottom-20'>{{item[3]}} {{item[1]}}</view>

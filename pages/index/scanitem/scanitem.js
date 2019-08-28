@@ -9,13 +9,13 @@ Page({
       'user_number': '请输入用户4位编号',
       'code': '请输入订单号',
       'company': '请输入快递公司名称',
-      'category': '请选择快递种类',
-      'quantity': '请输入数量',
-      'remarks': '请输入具体的其它种类',
-      'length1': '请输入长度1',
-      'width1': '请输入宽度1',
-      'height1': '请输入高度1',
-      'weight1': '请输入重量1',
+      // 'category': '请选择快递种类',
+      // 'quantity': '请输入数量',
+      // 'remarks': '请输入具体的其它种类',
+      // 'length1': '请输入长度1',
+      // 'width1': '请输入宽度1',
+      // 'height1': '请输入高度1',
+      // 'weight1': '请输入重量1',
     },
     company_dic: {
       'ane66': '安能快递',
@@ -43,7 +43,6 @@ Page({
     index: '',
     index_end: '-1',
     company: '',
-    add_item: [1],
     oldbelong: '',
     oldtime: '',
     oldcategory: '',
@@ -54,6 +53,11 @@ Page({
     confirm_text: '录入并继续',
     status: 1,
     code_origin: '',
+    fillit: '',
+
+    start_number: '',
+    start_quantity: 1,
+    box_data: [[null, null, null, null]],
   },
 
   onLoad: function (options) {
@@ -61,6 +65,7 @@ Page({
     this.setData({
       code: options.code,
       cookie: app.globalData.cookie,
+      fillit: options.fillit,
     })
 
     if (options.oldcode) {
@@ -74,8 +79,6 @@ Page({
       })
     }
 
-    this.get_api()
-
     common.req_com.post(
       'goods/exist/', { 'cookie': this.data.cookie, 'code': this.data.code}
     ).then(res => {
@@ -86,29 +89,41 @@ Page({
       })
       var status = res.status
       if (status == 0) {
+        this.get_api()
         return
       } else if (status == 1 || status == 2) {
         this.setData({
           confirm_text: '修改并继续',
         })
-        wx.showModal({
-          content: '用户：' + res.user1 + '，订单号：' + res.code + ' 的包裹已经入库，是否需要继续操作？',
-          showCancel: true,
-          cancelText: '继续操作',
-          cancelColor: '#ff0000',
-          confirmText: "取消",
-          success:res => {
-            if (res.confirm) {
-              wx.reLaunch({
-                url: '/pages/index/index',
-              })
-            } else if (res.cancel) {
-              this.data.status = 2
-              this.data.code_origin = options.code
-              return
-            }
-          }
-        });
+        this.data.status = 2
+        this.data.code_origin = options.code
+
+        this.setData({
+          company: res.company,
+          start_quantity: res.quantity,
+          start_number: res.user1,
+          index: res.cate_index,
+          box_data: res.box_data,
+        })
+        return
+        // wx.showModal({
+        //   content: '用户：' + res.user1 + '，订单号：' + res.code + ' 的包裹已经入库，是否需要继续操作？',
+        //   showCancel: true,
+        //   cancelText: '继续操作',
+        //   cancelColor: '#ff0000',
+        //   confirmText: "取消",
+        //   success:res => {
+        //     if (res.confirm) {
+        //       wx.reLaunch({
+        //         url: '/pages/index/index',
+        //       })
+        //     } else if (res.cancel) {
+        //       this.data.status = 2
+        //       this.data.code_origin = options.code
+        //       return
+        //     }
+        //   }
+        // });
       } else if (status == 4) {
         wx.showModal({
           content: '用户：' + res.user1 + '，订单号：' + res.code + ' 的包裹已经退货，请勿重复操作',
@@ -182,8 +197,8 @@ Page({
     var obj = e.detail.value
     var refund = e.detail.target.dataset.refund
 
-    if (!refund || this.data.code_origin !== obj.code) {
-      for (var i in obj) {
+    // if (!refund || this.data.code_origin !== obj.code) {
+      for (var i in this.data.noticetext) {
         if (!obj[i].trim()) {
           wx.showModal({
             content: this.data.noticetext[i],
@@ -194,13 +209,14 @@ Page({
           });
           return
         }
+        console.log(i)
       }
-      obj['items'] = this.data.add_item.length
+      obj['items'] = this.data.box_data.length
       obj['category'] = this.data.picker[obj['category']]
       var url = 'goods/in/'
-    } else {
-      var url = 'goods/refund/'
-    }
+    // } else {
+    //   var url = 'goods/refund/'
+    // }
 
     obj['cookie'] = app.globalData.cookie
     console.log('obj', obj)
@@ -229,22 +245,28 @@ Page({
     ).then(res => {
       console.log(res)
 
-      var last_str = 'oldcode=' + res.code + '&time=' + res.time + '&category=' + res.category + '&company=' + res.company + '&status=' + res.status + '&belong=' + res.belong
+      if (this.data.fillit) {
+        wx.redirectTo({
+          url: '/pages/search/fillgoods/fillgoods'
+        })
+      } else {
+        var last_str = 'oldcode=' + res.code + '&time=' + res.time + '&category=' + res.category + '&company=' + res.company + '&status=' + res.status + '&belong=' + res.belong
 
-      wx.scanCode({
-        success: res => {
-          wx.redirectTo({
-            url: 'scanitem?code=' + res['result'] + '&' + last_str,
-          })
-        },
-        fail: res => {
-          setTimeout(function () {
-            wx.reLaunch({
-              url: '/pages/index/index?' + last_str,
+        wx.scanCode({
+          success: res => {
+            wx.redirectTo({
+              url: 'scanitem?code=' + res['result'] + '&' + last_str,
             })
-          }, 200)
-        },
-      })
+          },
+          fail: res => {
+            setTimeout(function () {
+              wx.reLaunch({
+                url: '/pages/index/index?' + last_str,
+              })
+            }, 200)
+          },
+        })
+      }
     }).catch(e => {
       wx.showModal({
         content: e.error,
@@ -255,25 +277,25 @@ Page({
   },
 
   add: function() {
-    var add_item_old = this.data.add_item;
-    var item_now = add_item_old.push(add_item_old.length + 1);
-    var textadd = {
-      ['length' + item_now]: '请输入长度' + item_now,
-      ['width' + item_now]: '请输入宽度' + item_now,
-      ['height' + item_now]: '请输入高度' + item_now,
-      ['weight' + item_now]: '请输入重量' + item_now,
-    }
+    var box_data_old = this.data.box_data;
+    var item_now = box_data_old.push([null, null, null, null]);
+    // var textadd = {
+    //   ['length' + item_now]: '请输入长度' + item_now,
+    //   ['width' + item_now]: '请输入宽度' + item_now,
+    //   ['height' + item_now]: '请输入高度' + item_now,
+    //   ['weight' + item_now]: '请输入重量' + item_now,
+    // }
     this.setData({
-      add_item: add_item_old,
-      noticetext: Object.assign(this.data.noticetext, textadd),
+      box_data: box_data_old,
+      // noticetext: Object.assign(this.data.noticetext, textadd),
     })
   },
   minus: function () {
-    var add_item_old = this.data.add_item;
-    if (add_item_old.length > 1) {
-      add_item_old.pop()
+    var box_data_old = this.data.box_data;
+    if (box_data_old.length > 1) {
+      box_data_old.pop()
       this.setData({
-        add_item: add_item_old,
+        box_data: box_data_old,
       })
     } else {
       wx.showModal({
@@ -284,5 +306,16 @@ Page({
         }
       });
     }
+  },
+
+  datain: function (e) {
+    var dataset = e.target.dataset
+    var box_data_old = this.data.box_data
+
+    box_data_old[dataset.index][dataset.ind2] = e.detail.value
+
+    this.setData({
+      box_data: box_data_old,
+    })
   },
 })

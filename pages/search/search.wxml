@@ -2,7 +2,7 @@
 <block wx:else>
   <view wx:if="{{!is_staff}}">
     <view wx:if="{{is_identified == 2}}">
-      <button class='no-user2' wx:if='{{goods_list.length == 0}}' disabled='true'>暂无最近记录</button>
+      <button wx:if='{{goods_list.length == 0}}' class='no-user2' disabled='true'>暂无最近记录</button>
       <view wx:else>
         <view wx:for="{{goods_list}}" wx:key>
           <view class='flex-goods'>
@@ -16,6 +16,7 @@
           <view class="divLine"></view>
         </view>
       </view>
+      <view class='no-user-text'>小程序8.29号开始使用，只显示该日期后签收的包裹。（试运行阶段数据可能存在不准确，可随时联系客服）</view>
       <view class='text-center link-css' bindtap="all_goods">显示所有历史包裹</view>
 
     </view>
@@ -53,6 +54,18 @@
         <view class="content">
           <text class="cuIcon-refund lg text-black"></text>
           <text class="">退货查询</text>
+        </view>
+        <view class="action">
+          <image src="/image/right.png" class='self-pix'></image>
+        </view>
+      </button>
+    </view>
+
+    <view class="cu-item">
+      <button class="cu-btn content" bindtap="good_fill">
+        <view class="content">
+          <text class="cuIcon-edit lg text-black"></text>
+          <text class="">未补全包裹</text>
         </view>
         <view class="action">
           <image src="/image/right.png" class='self-pix'></image>

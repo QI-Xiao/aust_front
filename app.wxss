@@ -56,3 +56,12 @@
   text-decoration: underline;
   color: blue;
 }
+.no-user2{
+  margin-top: 50%;
+  width: 90%;
+}
+.no-user-text {
+  padding: 30rpx 8% 0;
+  color: #777;
+  text-align: center;
+}

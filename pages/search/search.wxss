@@ -7,10 +7,6 @@
   margin-top: 50%;
   width: 60%;
 }
-.no-user2{
-  margin-top: 50%;
-  width: 90%;
-}
 .refund-text{
   color: white;
   background-color: red;

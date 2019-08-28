@@ -1,14 +1,15 @@
 <block wx:if="{{goods_list.length !== 0}}">
+  <view class="divLine"></view>
   <view wx:for="{{goods_list}}" wx:key>
     <view class='flex-goods'>
       <view class='flex-1 bottom-20'>
         <text>{{item[6]}} {{item[4]}}</text>
+        <text class="link-css" bindtap="fillitem" data-code='{{item[1]}}' data-index='{{index}}'>补全</text>
       </view>
       <view class='bottom-20'>{{item[3]}} {{item[1]}}</view>
-      <view class='bottom-20'>入库时间：{{item[2]}}</view>
-      <view>退货时间：{{item[5]}}</view>
+      <view>{{item[5]}} {{item[2]}}</view>
     </view>
     <view class="divLine"></view>
   </view>
 </block>
-<button class='no-user2' wx:else disabled='true'>没有退货商品</button>
+<button class='no-user2' wx:else disabled='true'>没有未补全的商品</button>

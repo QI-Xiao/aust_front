@@ -1,3 +1,7 @@
 view {
 	box-sizing: border-box;
 }
+.text-center2 {
+  padding: 20rpx 10%;
+  text-align: center;
+}

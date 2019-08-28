@@ -1,0 +1,7 @@
+.new-register {
+  text-align: center;
+  padding: 20rpx 0;
+}
+.new-info {
+  font-size: 34rpx;
+}

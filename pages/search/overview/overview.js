@@ -5,6 +5,7 @@ Page({
     date1: '',
     date2: '',
     count_list: [],
+    fill_text: '',
   },
 
   onLoad: function (options) {
@@ -28,6 +29,7 @@ Page({
       console.log(res)
       this.setData({
         count_list: res.count_list,
+        fill_text: res.fill_text,
       })
     }).catch(e => {
       wx.navigateTo({
@@ -58,4 +60,10 @@ Page({
       this.item_list()
     }
   },
+
+  fill_goods: function() {
+    wx.navigateTo({
+      url: '../fillgoods/fillgoods',
+    })
+  }
 })

@@ -24,7 +24,7 @@
 </form>
 
 <view class="padding">
-  <view class="grid col-2 margin-bottom text-center">
+  <view class="grid col-2 margin-bottom text-center" style="margin-bottom: 0">
     <view class="padding bg-grey">品类</view>
     <view class="padding bg-grey">数量</view>
     <block wx:for="{{count_list}}" wx:key>
@@ -33,3 +33,7 @@
     </block>
   </view>
 </view>
+<block wx:if='{{fill_text}}'>
+  <view class='text-center2' >{{fill_text}}</view>
+  <view class='text-center2 link-css' bindtap="fill_goods">补全包裹相关信息</view>
+</block>

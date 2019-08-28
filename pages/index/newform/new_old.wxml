@@ -1,2 +1,2 @@
-<button bindtap='tonewform' data-user='new'>我是新用户</button>
-<button bindtap='tonewform' data-user='old'>我是老用户</button>
+<button bindtap='tonewform' data-user='new' class="new-register"><view>新客户</view><view class='new-info'>（需申请新的海运编号的亲，请点击这里👈🏻）</view></button>
+<button bindtap='tonewform' data-user='old' class="new-register"><view>老客户</view><view class='new-info'>（已有4位数海运编号的亲，请点击这里👈🏻）</view></button>

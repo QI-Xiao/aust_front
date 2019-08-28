@@ -10,8 +10,8 @@
     "pages/search/oneuser/oneuser",
     "pages/search/overview/overview",
     "pages/search/refund/refund",
-    "pages/search/allrefunds/allrefunds",
-    "pages/search/refund/allrefund"
+    "pages/search/refund/allrefund",
+    "pages/search/fillgoods/fillgoods"
   ],
   "window": {
     "backgroundTextStyle": "light",

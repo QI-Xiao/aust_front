@@ -108,6 +108,12 @@ Page({
     })
   },
 
+  good_fill: function() {
+    wx.navigateTo({
+      url: 'fillgoods/fillgoods',
+    })
+  },
+
   onPullDownRefresh: function () {
     this.onShow({ 'refresh': true })
     wx.stopPullDownRefresh()
