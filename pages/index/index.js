@@ -157,6 +157,7 @@ Page({
 
   usescan: function() {
     wx.scanCode({
+      scanType: ['barCode'],
       success: res => {
         wx.navigateTo({
           url: 'scanitem/scanitem?code=' + res['result'],

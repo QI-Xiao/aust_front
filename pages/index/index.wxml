@@ -43,7 +43,7 @@
         <text class="userinfo-nickname">{{userInfo.nickName}}</text>
         <image class="userinfo-avatar" src="{{userInfo.avatarUrl}}" mode="cover"></image>
 
-        <button class='no-number' wx:if="{{is_identified == 0}}" bindtap='toform'> 获取用户编号 </button>
+        <button class='no-number' wx:if="{{is_identified == 0}}" bindtap='toform' type="primary"> 请点击进入 </button>
         <block wx:elif="{{is_identified == 1}}">
           <button class='no-number' bindtap='refresh'> 刷新 </button>
           <text style="margin-top: 30rpx;">申请已提交，请联系客服进行审核</text>

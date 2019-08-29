@@ -30,6 +30,7 @@ App({
                         code: codetobackend,
                         iv: res['iv'],
                         encryptinput: res['encryptedData'],
+                        version: this.globalData.version,
                       },
                       success: res => {
                         console.log('request success', res)
@@ -115,7 +116,7 @@ App({
     Hrpxleft: 0,
     // domain: 'http://127.0.0.1:8000/aust/',
     domain: 'https://aus.python666.cn/aust/',
-    version: '1.0.0',
+    version: '1.0.3',
     info_address: '',
     info_person: [],
     info_phone: '',
