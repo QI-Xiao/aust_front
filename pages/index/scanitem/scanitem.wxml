@@ -1,13 +1,24 @@
 <form bindsubmit="formSubmit">
   <view class='text-flex' style='font-size: 28rpx' wx:if='{{oldcode}}'>
-    <view class='text-1'>最近{{oldstatus}}：</view>
-    <view class='text-2'>{{oldtime}} {{oldbelong}} {{oldcategory}} {{oldcode}} {{oldcompany}}</view>
+    <view class='text-self'><text class='text-bold'>最近{{oldstatus}}</text>：{{oldtime}} {{oldbelong}} {{oldcategory}} {{oldcode}} {{oldcompany}}</view>
   </view>
 
-	<view class="cu-form-group">
+  <scroll-view scroll-x class="bg-white nav" scroll-with-animation>
+    <view class="flex self-center">
+      <view class="cu-item flex-sub {{index===TabCur?'text-green cur':'border-white'}}" wx:for="{{num_ABC}}" wx:key bindtap="tabSelect" data-id="{{index}}">
+        {{item}}
+      </view>
+    </view>
+  </scroll-view>
+
+	<view class="cu-form-group" wx:if='{{show_number}}'>
 		<view class="title">用户编号</view>
-		<input placeholder="请输入用户编号" name='user_number' value="{{start_number}}"></input>
+		<input placeholder="请输入用户编号后三位数字" name='user_number' type='number' value="{{start_number}}"></input>
 	</view>
+  <view class="cu-form-group">
+		<view class="title">收件人姓名</view>
+		<input placeholder="请填写收件人姓名" name='receiver' value='{{receiver}}'></input>
+  </view>
 	<view class="cu-form-group">
 		<view class="title">订单号</view>
 		<input placeholder="扫码获取的订单号" name='code' value='{{code}}'></input>
@@ -37,28 +48,28 @@
 	</view>
 
   <view wx:for='{{box_data}}' wx:key>
-    <view class='before-box margin-top'>
+    <view class='before-box'>
       <text>第{{index+1}}箱 </text>
       <button class="cu-btn bg-blue light margin-left" bindtap='add'>增加箱数</button>
       <button wx:if='{{index > 0}}' class="cu-btn bg-blue light margin-left" bindtap='minus'>减少箱数</button>
     </view>
     <view class="box">
       <view class="column">
-        <view class='cu-form-group' style='min-height:80rpx;'>
+        <view class='cu-form-group' style='min-height:70rpx;'>
           <view class="title">长</view>
           <input value="{{box_data[index][0]}}" placeholder="长度，cm" name='length{{index+1}}' type='number' bindinput="datain" data-index="{{index}}" data-ind2="0"></input>
         </view>
-        <view class='cu-form-group' style='min-height:80rpx;'>
+        <view class='cu-form-group' style='min-height:70rpx;'>
           <view class="title">宽</view>
           <input value="{{box_data[index][1]}}" placeholder="宽度，cm" name='width{{index+1}}' type='number' bindinput="datain" data-index="{{index}}" data-ind2="1"></input>
         </view>
       </view>
       <view class="column">
-        <view class='cu-form-group' style='min-height:80rpx;'>
+        <view class='cu-form-group' style='min-height:70rpx;'>
           <view class="title">高</view>
           <input value="{{box_data[index][2]}}" placeholder="高度，cm" name='height{{index+1}}' type='number' bindinput="datain" data-index="{{index}}" data-ind2="2"></input>
         </view>
-        <view class='cu-form-group' style='min-height:80rpx;'>
+        <view class='cu-form-group' style='min-height:70rpx;'>
           <view class="title">重</view>
           <input value="{{box_data[index][3]}}" placeholder="重量，kg" name='weight{{index+1}}' type='digit' bindinput="datain" data-index="{{index}}" data-ind2="3"></input>
         </view>
@@ -66,7 +77,7 @@
     </view>
   </view>
 
-  <view class="padding flex flex-direction">
+  <view class="padd-but flex flex-direction">
     <!-- <button class="cu-btn lg mar-bottom-20" form-type="submit" data-toindex='t'>录入并返回</button>
     <button class="cu-btn bg-green lg mar-bottom-20" form-type="submit" data-toindex='f'>录入并继续</button> -->
     <button class="cu-btn bg-green lg mar-bottom-20" form-type="submit">{{confirm_text}}</button>

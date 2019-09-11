@@ -1,3 +1,26 @@
+.self-center{
+  /* padding-top: 10rpx;  */
+  text-align: center;
+}
+.border-white {
+  border-bottom: 4rpx solid white;
+}
+.cu-form-group {
+  min-height: 90rpx;
+}
+.text-self{
+  margin-bottom: 12rpx;
+  line-height: 36rpx;
+}
+.text-bold{
+  font-weight: bold;
+}
+.padd-but{
+  padding: 20rpx 30rpx 0;
+}
+.cu-item{
+  min-width: 80rpx;
+}
 .before-box{
   padding:1rpx 30rpx;
   font-size:30rpx;
@@ -30,9 +53,9 @@
 }
 .self-style{
   margin-left: initial;
-  margin-top:40rpx;
+  margin-top: 10rpx;
   color: red;
-  height:80rpx;
+  height:76rpx;
   text-decoration: underline;
   background-color: white;
 }

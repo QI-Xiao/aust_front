@@ -44,6 +44,11 @@ App({
                         } else {
                           this.globalData.cookie = info.cookie
                           this.globalData.user_id = info.user_id
+                          if (info.is_staff) {
+                            this.globalData.company_dic = info.company_dic
+                            this.globalData.num_ABC = info.num_ABC
+                            this.globalData.num_all = info.num_all
+                          }
                           this.globalData.is_staff = info.is_staff
                           this.globalData.is_identified = info.is_identified
                           this.globalData.user_number = info.user_number
@@ -116,11 +121,14 @@ App({
     Hrpxleft: 0,
     // domain: 'http://127.0.0.1:8000/aust/',
     domain: 'https://aus.python666.cn/aust/',
-    version: '1.0.3',
+    version: '1.1.0',
     info_address: '',
     info_person: [],
     info_phone: '',
     info_ZIPcode: '',
     info_text: '',
+    company_dic: '',
+    num_ABC: '',
+    num_all: '',
   }
 })

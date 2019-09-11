@@ -17,29 +17,7 @@ Page({
       // 'height1': '请输入高度1',
       // 'weight1': '请输入重量1',
     },
-    company_dic: {
-      'ane66': '安能快递',
-      'debangkuaidi': '德邦快递',
-      'ems': 'EMS',
-      'guotongkuaidi': '国通快递',
-      'huitongkuaidi': '百世快递',
-      'jd': '京东物流',
-      'kuayue': '跨越速运',
-      'pjbest': '品骏快递',
-      'shentong': '申通快递',
-      'shunfeng': '顺丰速运',
-      'suer': '速尔快递',
-      'xinfengwuliu': '信丰物流',
-      'youshuwuliu': '优速物流',
-      'youzhengguonei': '邮政快递包裹',
-      'yuantong': '圆通速递',
-      'yuantongguoji': '圆通国际',
-      'yunda': '韵达快递',
-      'zhaijisong': '宅急送',
-      'zhongtong': '中通快递',
-      'ewe': 'EWE全球快递',
-      'quanyikuaidi': '全一快递',
-    },
+    company_dic: '',
     index: '',
     index_end: '-1',
     company: '',
@@ -57,15 +35,26 @@ Page({
 
     start_number: '',
     start_quantity: 1,
+    receiver: '',
+
+    TabCur: -1,
+    // scrollLeft: 0,
+    num_ABC: '',
+    num_all: '',
+    show_number: true,
+
     box_data: [[null, null, null, null]],
   },
 
   onLoad: function (options) {
     console.log(options)
+    this.data.company_dic = app.globalData.company_dic
     this.setData({
       code: options.code,
       cookie: app.globalData.cookie,
       fillit: options.fillit,
+      num_ABC: app.globalData.num_ABC,
+      num_all: app.globalData.num_all,
     })
 
     if (options.oldcode) {
@@ -80,7 +69,7 @@ Page({
     }
 
     common.req_com.post(
-      'goods/exist/', { 'cookie': this.data.cookie, 'code': this.data.code}
+      'goods/exist/', { 'cookie': this.data.cookie, 'code': this.data.code, 'part': true}
     ).then(res => {
       console.log(res)
       this.setData({
@@ -99,9 +88,11 @@ Page({
         this.data.code_origin = options.code
 
         this.setData({
+          receiver: res.receiver,
           company: res.company,
           start_quantity: res.quantity,
           start_number: res.user1,
+          TabCur: this.data.num_ABC.indexOf(res.user1_ABC),
           index: res.cate_index,
           box_data: res.box_data,
         })
@@ -150,21 +141,46 @@ Page({
     })
   },
 
+  tabSelect(e) {
+    var e_id = e.currentTarget.dataset.id
+    var one_number = this.data.num_ABC[e_id]
+    if (this.data.num_all.includes(one_number)) {
+      this.setData({
+        show_number: false,
+      })
+    } else {
+      this.setData({
+        show_number: true,
+      })
+    }
+    this.setData({
+      TabCur: e_id,
+      // scrollLeft: (e.currentTarget.dataset.id - 1) * 60
+    })
+  },
+
   get_api: function() {
     wx.request({
       url: 'https://www.kuaidi100.com/autonumber/autoComNum?text=' + this.data.code,
-      // url: 'https://www.kuaidi100.com/autonumber/autoComNum?text=' +'SF1000674348493',
+      // url: 'https://www.kuaidi100.com/autonumber/autoComNum?text=' +'TT6600279399070',
       success: res => {
         console.log('res.data', res.data)
         var auto_list = res.data.auto
         if (res.statusCode !== 200 || !auto_list || auto_list.length == 0) {
-          this.setData({
-            can_auto_identify: false,
-          })
+          if (this.data.code.slice(0, 2) === 'JD') {
+            this.setData({
+              company: '京东物流',
+              can_auto_identify: true,
+            })
+          } else {
+            this.setData({
+              can_auto_identify: false,
+            })
+          }
         } else {
           var company_en = auto_list[0].comCode
           var company = this.data.company_dic[company_en]
-          console.log(company_en, company)
+          console.log(this.data.company_dic, company_en, company)
           if (company_en && company) {
             this.setData({
               company: company,
@@ -193,9 +209,40 @@ Page({
 
   formSubmit: function (e) {
     console.log(e.detail.value)
+
+    var TabCur = this.data.TabCur
+    if (TabCur === -1) {
+      wx.showModal({
+        content: '请选择用户编号的首字母',
+        showCancel: false,
+        confirmText: "确定",
+        success: res => {
+        }
+      });
+      return
+    }
     
     var obj = e.detail.value
     var refund = e.detail.target.dataset.refund
+
+    console.log('obj1111111111', obj)
+
+    if (this.data.show_number) {
+      var user_number = obj['user_number']
+      if (user_number.length !== 3) {
+        wx.showModal({
+          content: '用户编号数字部分的长度不对，请输入用户编号的3位数字',
+          showCancel: false,
+          confirmText: "确定",
+          success: res => {
+          }
+        });
+        return
+      }
+      obj['user_number'] = this.data.num_ABC[TabCur] + user_number
+    } else {
+      obj['user_number'] = this.data.num_ABC[TabCur]
+    }
 
     // if (!refund || this.data.code_origin !== obj.code) {
       for (var i in this.data.noticetext) {
