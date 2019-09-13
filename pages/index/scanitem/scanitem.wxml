@@ -5,7 +5,7 @@
 
   <scroll-view scroll-x class="bg-white nav" scroll-with-animation>
     <view class="flex self-center">
-      <view class="cu-item flex-sub {{index===TabCur?'text-green cur':'border-white'}}" wx:for="{{num_ABC}}" wx:key bindtap="tabSelect" data-id="{{index}}">
+      <view class="cu-item flex-sub {{index===TabCur?'item-checked':''}}" wx:for="{{num_ABC}}" wx:key bindtap="tabSelect" data-id="{{index}}">
         {{item}}
       </view>
     </view>
@@ -13,11 +13,14 @@
 
 	<view class="cu-form-group" wx:if='{{show_number}}'>
 		<view class="title">用户编号</view>
-		<input placeholder="请输入用户编号后三位数字" name='user_number' type='number' value="{{start_number}}"></input>
+		<input placeholder="请输入用户编号后三位数字" name='user_number' type='number' value="{{start_number}}" bindinput="number_in"></input>
+    <view wx:if='{{user_exist===1}}' class="cu-tag bg-green">已注册</view>
+    <view wx:elif='{{user_exist===0}}' class="cu-tag bg-yellow">未注册</view>
+    <view wx:else class="cu-tag bg-red">未获得</view>
 	</view>
   <view class="cu-form-group">
-		<view class="title">收件人姓名</view>
-		<input placeholder="请填写收件人姓名" name='receiver' value='{{receiver}}'></input>
+		<view class="title">{{receiver_text}}</view>
+		<input placeholder="请填写{{receiver_text}}" name='receiver' value='{{receiver}}'></input>
   </view>
 	<view class="cu-form-group">
 		<view class="title">订单号</view>

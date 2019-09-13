@@ -2,6 +2,11 @@
   /* padding-top: 10rpx;  */
   text-align: center;
 }
+.item-checked{
+  background-color: #1AAD19;
+  color: white;
+  font-weight: bold;
+}
 .border-white {
   border-bottom: 4rpx solid white;
 }
@@ -10,7 +15,7 @@
 }
 .text-self{
   margin-bottom: 12rpx;
-  line-height: 36rpx;
+  line-height: 32rpx;
 }
 .text-bold{
   font-weight: bold;
@@ -19,7 +24,8 @@
   padding: 20rpx 30rpx 0;
 }
 .cu-item{
-  min-width: 80rpx;
+  min-width: 66rpx;
+  margin: 0;
 }
 .before-box{
   padding:1rpx 30rpx;

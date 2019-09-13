@@ -42,6 +42,8 @@ Page({
     num_ABC: '',
     num_all: '',
     show_number: true,
+    user_exist: -1,
+    receiver_text: '收件人姓名',
 
     box_data: [[null, null, null, null]],
   },
@@ -75,6 +77,7 @@ Page({
       this.setData({
         picker: res.cate_all,
         index_end: res.cate_len,
+        user_exist: res.user_exist,
       })
       var status = res.status
       if (status == 0) {
@@ -143,20 +146,27 @@ Page({
 
   tabSelect(e) {
     var e_id = e.currentTarget.dataset.id
-    var one_number = this.data.num_ABC[e_id]
-    if (this.data.num_all.includes(one_number)) {
+    if (e_id !== this.data.TabCur) {
       this.setData({
-        show_number: false,
+        TabCur: e_id,
+        // scrollLeft: (e.currentTarget.dataset.id - 1) * 60
       })
-    } else {
+      var one_number = this.data.num_ABC[e_id]
+      var is_includes = this.data.num_all.includes(one_number)
+      if (!this.data.show_number) {
+        this.setData({
+          start_number: '',
+        })
+      }
+      if (is_includes) {
+        this.data.start_number = one_number.slice(1)
+      }
       this.setData({
-        show_number: true,
+        show_number: is_includes ? false : true,
+        receiver_text: is_includes ? '箱子编号' : '收件人姓名',
       })
+      this.get_receiver()
     }
-    this.setData({
-      TabCur: e_id,
-      // scrollLeft: (e.currentTarget.dataset.id - 1) * 60
-    })
   },
 
   get_api: function() {
@@ -170,6 +180,11 @@ Page({
           if (this.data.code.slice(0, 2) === 'JD') {
             this.setData({
               company: '京东物流',
+              can_auto_identify: true,
+            })
+          } else if (this.data.code.slice(0, 5) === '61109') {
+            this.setData({
+              company: '菜鸟快递',
               can_auto_identify: true,
             })
           } else {
@@ -199,6 +214,46 @@ Page({
         })
       }
     })
+  },
+
+  number_in: function(e) {
+    this.data.start_number = e.detail.value
+    this.get_receiver()
+  },
+
+  get_receiver: function() {
+    var start_number = this.data.start_number
+    var TabCur = this.data.TabCur
+    if (start_number.length === 3 && TabCur !== -1) {
+      var user_number = this.data.num_ABC[TabCur] + start_number
+      console.log('info: ', start_number, TabCur, user_number)
+
+      common.req_com.post(
+        'receiver/get/', { 'cookie': this.data.cookie, 'user_number': user_number }
+      ).then(res => {
+        console.log(res)
+        var user_exist = res.user_exist
+        this.setData({
+          receiver: user_exist === 1 ? res.recipients : '',
+          user_exist: res.user_exist,
+        })
+      }).catch(e => {
+        this.setData({
+          user_exist: -1,
+        })
+        wx.showModal({
+          content: e.error,
+          showCancel: false,
+          confirmText: "确定",
+          success: function (res) {
+          }
+        });
+      })
+    } else {
+      this.setData({
+        user_exist: -1,
+      })
+    }
   },
 
   PickerChange(e) {
