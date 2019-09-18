@@ -13,3 +13,33 @@
   margin-left: 4%;
   padding: 0 2%;
  }
+.self-btn {
+  width: 80%;
+  left: 10%;
+  position: fixed;
+  bottom: 120rpx;
+}
+.flex-around {
+  justify-content: space-around;
+  padding: 20rpx 0;
+}
+.self-title {
+  font-size: 34rpx;
+  font-weight: bold;
+  margin: 60rpx auto auto;
+}
+.self-content {
+  /* padding: 50rpx; */
+  background-color: white;
+}
+.self-text{
+  color: #888;
+  padding: 20rpx 0 10rpx;
+}
+.cu-dialog {
+  width: 540rpx;
+}
+.self-img {
+  width: 480rpx;
+  height: 284rpx;
+}

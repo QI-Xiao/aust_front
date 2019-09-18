@@ -1,4 +1,4 @@
-<button class='no-user2' wx:if="{{!hasUserInfo}}" disabled='true'>首页登录后查看</button>
+<button class='no-user2' wx:if="{{!hasUserInfo && ((is_identified!==-2 && is_staff===true) || !is_staff)}}" disabled='true'>首页登录后查看</button>
 <block wx:else>
   <view wx:if="{{!is_staff}}">
     <view wx:if="{{is_identified == 2}}">
@@ -26,7 +26,16 @@
   </view>
   <view wx:else class="cu-list menu">
     <view class="cu-item">
-      <button class="cu-btn content" bindtap="overview">
+      <button class="cu-btn content" wx:if="{{!hasUserInfo}}" bindtap="showModal" data-target="DialogModal1">
+        <view class="content">
+          <text class="cuIcon-list lg text-black"></text>
+          <text class="">包裹统计</text>
+        </view>
+        <view class="action">
+          <image src="/image/right.png" class='self-pix'></image>
+        </view>
+      </button>
+      <button wx:else class="cu-btn content" bindtap="overview">
         <view class="content">
           <text class="cuIcon-list lg text-black"></text>
           <text class="">包裹统计</text>
@@ -38,7 +47,16 @@
     </view>
 
     <view class="cu-item">
-      <button class="cu-btn content" bindtap="oneuser">
+      <button class="cu-btn content" wx:if="{{!hasUserInfo}}" bindtap="showModal" data-target="DialogModal1">
+        <view class="content">
+          <text class="cuIcon-text lg text-black"></text>
+          <text class="">用户详情</text>
+        </view>
+        <view class="action">
+          <image src="/image/right.png" class='self-pix'></image>
+        </view>
+      </button>
+      <button wx:else class="cu-btn content" bindtap="oneuser">
         <view class="content">
           <text class="cuIcon-text lg text-black"></text>
           <text class="">用户详情</text>
@@ -50,7 +68,16 @@
     </view>
 
     <view class="cu-item">
-      <button class="cu-btn content" bindtap="refund">
+      <button class="cu-btn content" wx:if="{{!hasUserInfo}}" bindtap="showModal" data-target="DialogModal1">
+        <view class="content">
+          <text class="cuIcon-refund lg text-black"></text>
+          <text class="">退货查询</text>
+        </view>
+        <view class="action">
+          <image src="/image/right.png" class='self-pix'></image>
+        </view>
+      </button>
+      <button wx:else class="cu-btn content" bindtap="refund">
         <view class="content">
           <text class="cuIcon-refund lg text-black"></text>
           <text class="">退货查询</text>
@@ -62,7 +89,16 @@
     </view>
 
     <view class="cu-item">
-      <button class="cu-btn content" bindtap="good_fill">
+      <button class="cu-btn content" wx:if="{{!hasUserInfo}}" bindtap="showModal" data-target="DialogModal1">
+        <view class="content">
+          <text class="cuIcon-edit lg text-black"></text>
+          <text class="">未补全包裹</text>
+        </view>
+        <view class="action">
+          <image src="/image/right.png" class='self-pix'></image>
+        </view>
+      </button>
+      <button wx:else class="cu-btn content" bindtap="good_fill">
         <view class="content">
           <text class="cuIcon-edit lg text-black"></text>
           <text class="">未补全包裹</text>
@@ -72,5 +108,24 @@
         </view>
       </button>
     </view>
+
+    <view class="cu-modal {{modalName=='DialogModal1'?'show':''}}">
+      <view class="cu-dialog">
+        <view class="cu-bar bg-white justify-end">
+          <view class="self-title">您还未登录</view>
+        </view>
+        <view class="self-content">
+          <view class="self-text">请先登录再进行操作</view>
+          <image src="/image/login.png" class='self-img' mode="aspectFit"></image>
+        </view>
+        
+        <view class="cu-bar bg-white flex-around">
+          <button class="cu-btn line-green text-green" bindtap="hideModal">暂不登录</button>
+          <button class="cu-btn bg-green margin-left" bindtap="hideModal" open-type="getUserInfo" bindgetuserinfo="getUserInfo">立即登录</button>
+        </view>
+      </view>
+    </view>
+
+    <button class="self-btn" type="primary" wx:if="{{!hasUserInfo}}" bindtap="showModal" data-target="DialogModal1">点击登录账户</button>
   </view>
 </block>

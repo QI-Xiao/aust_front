@@ -1,11 +1,12 @@
 .self-center{
-  /* padding-top: 10rpx;  */
   text-align: center;
+  font-size: 36rpx;
 }
 .item-checked{
   background-color: #1AAD19;
   color: white;
   font-weight: bold;
+  font-size: 48rpx;
 }
 .border-white {
   border-bottom: 4rpx solid white;
@@ -23,9 +24,10 @@
 .padd-but{
   padding: 20rpx 30rpx 0;
 }
-.cu-item{
+.nav .cu-item{
   min-width: 66rpx;
   margin: 0;
+  padding: 0;
 }
 .before-box{
   padding:1rpx 30rpx;

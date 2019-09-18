@@ -1,6 +1,6 @@
-<view wx:if="{{!hasUserInfo && canIUse}}">
+<view wx:if="{{!hasUserInfo && canIUse && is_identified!==-2}}">
   <view class="userinfo">
-    <button class='userinfo-avatar2' open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 登录 </button>
+    <button wx:if='{{is_identified!==-3}}' class='userinfo-avatar2' open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 登录 </button>
   </view>
 </view>
 

@@ -4,25 +4,53 @@ Page({
   data: {
     // userInfo: {},
     hasUserInfo: false,
-    // canIUse: wx.canIUse('button.open-type.getUserInfo'),
-    is_identified: '',
+    canIUse: wx.canIUse('button.open-type.getUserInfo'),
+    is_identified: -2,
     is_staff: '',
     goods_list: [],
   },
 
-  // onLoad: function () {
-  // },
+  onLoad: function () {
+    console.log('type 222222222222222222222222222222222')
+      // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
+      // 所以此处加入 callback 以防止这种情况
+    app.userInfoReadyCallback = res => {
+      var userinfo = res.userInfo
+      console.log('userinfo', userinfo)
+      if (userinfo && userinfo !== true) {
+        this.setData({
+          hasUserInfo: true,
+        })
+      }
+    }
+  },
+
+  showModal(e) {
+    this.setData({
+      modalName: e.currentTarget.dataset.target
+    })
+  },
+  hideModal(e) {
+    this.setData({
+      modalName: null
+    })
+  },
 
   onShow: function(options) {
     if (options) {
       console.log('refresh', options, options.refresh)
       var refresh = options.refresh
     }
-    if (app.globalData.userInfo) {
+    var userinfo = app.globalData.userInfo
+    if (userinfo) {
+      if (userinfo !== true) {
+        this.setData({
+          hasUserInfo: true,
+        })
+      }
       var is_identified = app.globalData.is_identified
       var is_staff = app.globalData.is_staff
       this.setData({
-        hasUserInfo: true,
         is_identified: is_identified,
         is_staff: is_staff,
       })
@@ -37,6 +65,11 @@ Page({
         })
       }
     }
+  },
+
+  getUserInfo: function (e) {
+    app.requestinf()
+    this.onShow()
   },
 
   item_list: function(cookie) {

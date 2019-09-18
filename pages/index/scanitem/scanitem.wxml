@@ -29,8 +29,22 @@
 	<view class="cu-form-group">
 		<view class="title">快递公司</view>
 		<input wx:if='{{can_auto_identify}}' placeholder="订单所属快递公司" name='company' value='{{company}}(自动识别)'></input>
-    <input wx:else placeholder="无法自动识别，请手动输入" name='company' value='{{company}}'></input>
+    <input wx:elif='{{have_info}}' placeholder="订单所属快递公司" name='company' value='{{company}}'></input>
+  	<picker wx:else placeholder="无法自动识别，请手动选择" bindchange="Companyhange" value="{{comp_index}}" range="{{comp_all}}" name='company_picker'>
+			<view class="picker" style='text-align:left;'>
+				{{comp_index?comp_all[comp_index]:'无法自动识别，请手动选择'}}
+			</view>
+		</picker>
 	</view>
+  <view wx:if='{{comp_index==comp_len}}' class="cu-form-group">
+		<view class="title">其它快递公司</view>
+		<input placeholder="请输入公司名" name='company_other'></input>
+	</view>
+
+  <view class="padd-but flex flex-direction">
+    <button class="cu-btn bg-green lg mar-bottom-20" form-type="submit">{{confirm_text}}</button>
+  </view>
+
   <view class="cu-form-group">
 		<view class="title">种类</view>
 		<picker placeholder="请选择种类" bindchange="PickerChange" value="{{index}}" range="{{picker}}" name='category'>
@@ -39,7 +53,6 @@
 			</view>
 		</picker>
 	</view>
-
 	<view wx:if='{{index==index_end}}' class="cu-form-group">
 		<view class="title">其它种类</view>
 		<input placeholder="请输入详细类别" name='remarks'></input>
@@ -81,9 +94,6 @@
   </view>
 
   <view class="padd-but flex flex-direction">
-    <!-- <button class="cu-btn lg mar-bottom-20" form-type="submit" data-toindex='t'>录入并返回</button>
-    <button class="cu-btn bg-green lg mar-bottom-20" form-type="submit" data-toindex='f'>录入并继续</button> -->
-    <button class="cu-btn bg-green lg mar-bottom-20" form-type="submit">{{confirm_text}}</button>
     <button class="self-style" form-type="submit" data-refund='t'>退货</button>
   </view>
 </form>

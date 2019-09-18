@@ -5,7 +5,7 @@ Page({
     userInfo: {},
     hasUserInfo: false,
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
-    is_identified: '',
+    is_identified: -3,
     is_staff: '',
     user_number: '',
     
@@ -39,6 +39,7 @@ Page({
     }
 
     if (app.globalData.userInfo) {
+      console.log('type 111111111111111111111111111')
       this.setData({
         userInfo: app.globalData.userInfo,
         hasUserInfo: true,
@@ -61,6 +62,7 @@ Page({
         })
       }
     } else if (this.data.canIUse) {
+      console.log('type 222222222222222222222222222222222')
       // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
       // 所以此处加入 callback 以防止这种情况
       app.userInfoReadyCallback = res => {
@@ -86,7 +88,13 @@ Page({
           })
         }
       }
+      app.nouserInfoCallback = res => {
+        this.setData({
+          is_identified: res.is_identified,
+        })
+      }
     } else {
+      console.log('type 333333333333333333333333')
       // 在没有 open-type=getUserInfo 版本的兼容处理
       wx.getUserInfo({
         success: res => {

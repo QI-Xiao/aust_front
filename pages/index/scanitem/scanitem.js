@@ -20,6 +20,11 @@ Page({
     company_dic: '',
     index: '',
     index_end: '-1',
+
+    comp_index: '',
+    comp_all: [],
+    comp_len: '-1',
+
     company: '',
     oldbelong: '',
     oldtime: '',
@@ -28,6 +33,7 @@ Page({
     oldcompany: '',
     oldstatus: '',
     can_auto_identify: false,
+    have_info: false,
     confirm_text: '录入并继续',
     status: 1,
     code_origin: '',
@@ -78,6 +84,8 @@ Page({
         picker: res.cate_all,
         index_end: res.cate_len,
         user_exist: res.user_exist,
+        comp_all: res.comp_all,
+        comp_len: res.comp_len,
       })
       var status = res.status
       if (status == 0) {
@@ -98,6 +106,7 @@ Page({
           TabCur: this.data.num_ABC.indexOf(res.user1_ABC),
           index: res.cate_index,
           box_data: res.box_data,
+          have_info: true,
         })
         return
         // wx.showModal({
@@ -262,6 +271,12 @@ Page({
     })
   },
 
+  Companyhange(e) {
+    this.setData({
+      comp_index: e.detail.value,
+    })
+  },
+
   formSubmit: function (e) {
     console.log(e.detail.value)
 
@@ -298,6 +313,36 @@ Page({
     } else {
       obj['user_number'] = this.data.num_ABC[TabCur]
     }
+
+    if (obj.company_other !== undefined) {
+      if (obj.company_other) {
+        obj['company'] = obj.company_other
+      } else {
+        wx.showModal({
+          content: '请输入快递公司名称',
+          showCancel: false,
+          confirmText: "确定",
+          success: res => {
+          }
+        });
+        return
+      }
+    } else if (obj.company_picker !== undefined) {
+      if (obj.company_picker) {
+        obj['company'] = this.data.comp_all[obj.company_picker]
+      } else {
+        wx.showModal({
+          content: '请选择快递公司名称',
+          showCancel: false,
+          confirmText: "确定",
+          success: res => {
+          }
+        });
+        return
+      }
+    }
+
+    console.log(obj.company_other, obj.company_picker, obj.company, this.data.comp_all[obj['company_picker']])
 
     // if (!refund || this.data.code_origin !== obj.code) {
       for (var i in this.data.noticetext) {
