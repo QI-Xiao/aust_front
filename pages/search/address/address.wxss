@@ -1,0 +1,17 @@
+.weui-footer {
+  color: #3f3f3f;
+  text-align: center;
+  padding: 30% 0;
+}
+.weui-footer__title {
+  padding-bottom: 60rpx;
+  font-size: 42rpx;
+}
+.weui-footer__text {
+  padding: 0 23% 40rpx;
+  font-size: 32rpx;
+}
+.copy-style{
+  color: blue;
+  text-decoration: underline;
+}

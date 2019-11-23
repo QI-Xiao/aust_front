@@ -1,0 +1,8 @@
+<view class="weui-footer">
+  <view class="weui-footer__title">{{text0}}</view>
+  <view class="weui-footer__text">{{text1}}</view>
+  <view class="weui-footer__text">{{text2}}</view>
+  <text class='weui-footer__text copy-style' bindtap='copyit'>点击复制</text>
+</view>
+
+<button bindtap="returnback" class="weui-btn self-btn" type="primary">返回前页</button>

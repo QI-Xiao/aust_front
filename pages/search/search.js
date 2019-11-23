@@ -8,6 +8,7 @@ Page({
     is_identified: -2,
     is_staff: '',
     goods_list: [],
+    text_list: null,
   },
 
   onLoad: function () {
@@ -79,6 +80,7 @@ Page({
       console.log(res)
       this.setData({
         goods_list: res.goods_list,
+        text_list: res.text_list,
       })
     }).catch(e => {
       wx.navigateTo({
@@ -139,6 +141,14 @@ Page({
     wx.navigateTo({
       url: 'allgoods/allgoods',
     })
+  },
+  depot_address: function () {
+    var t_l = this.data.text_list
+    if (t_l) {
+      wx.navigateTo({
+        url: 'address/address?text0=' + t_l[0] + '&text1=' + t_l[1] + '&text2=' + t_l[2],
+      })
+    }
   },
 
   good_fill: function() {
