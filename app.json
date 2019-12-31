@@ -12,7 +12,8 @@
     "pages/search/refund/refund",
     "pages/search/refund/allrefund",
     "pages/search/fillgoods/fillgoods",
-    "pages/search/address/address"
+    "pages/search/address/address",
+    "pages/search/notice/notice"
   ],
   "window": {
     "backgroundTextStyle": "light",

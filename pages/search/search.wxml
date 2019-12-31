@@ -2,10 +2,9 @@
 <block wx:else>
   <view wx:if="{{!is_staff}}">
     <view wx:if="{{is_identified == 2}}">
-      <block wx:if='{{text_list}}'>
-        <view class='text-center link-css' bindtap="depot_address" style="margin-bottom: 30rpx;">{{text_list[0]}}</view>
-        <view class="divLine"></view>
-      </block>
+      <view wx:if='{{text_list}}' class='text-center link-css' bindtap="depot_address" style="margin-bottom: 30rpx;">{{text_list[0]}}</view>
+      <view class='text-center link-css' bindtap="notice" style="margin-bottom: 30rpx;">{{notice_title}}</view>
+      <view class="divLine"></view>
       <button wx:if='{{goods_list.length == 0}}' class='no-user2' disabled='true'>暂无最近记录</button>
       <view wx:else>
         <view wx:for="{{goods_list}}" wx:key>

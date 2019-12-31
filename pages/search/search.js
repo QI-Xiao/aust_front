@@ -9,6 +9,7 @@ Page({
     is_staff: '',
     goods_list: [],
     text_list: null,
+    notice_title: '',
   },
 
   onLoad: function () {
@@ -81,6 +82,7 @@ Page({
       this.setData({
         goods_list: res.goods_list,
         text_list: res.text_list,
+        notice_title: res.notice_title,
       })
     }).catch(e => {
       wx.navigateTo({
@@ -149,6 +151,12 @@ Page({
         url: 'address/address?text0=' + t_l[0] + '&text1=' + t_l[1] + '&text2=' + t_l[2],
       })
     }
+  },
+
+  notice: function () {
+    wx.navigateTo({
+      url: 'notice/notice',
+    })
   },
 
   good_fill: function() {
