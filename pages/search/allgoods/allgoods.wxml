@@ -1,10 +1,30 @@
-<view wx:for="{{goods_list}}" wx:key>
-  <view class='flex-goods'>
-    <view class='bottom-20'>
-      <text>{{item[4]}}</text>
+<form bindsubmit="formSubmit" class="search">
+  <view class="cu-bar bg-white">
+    <view class="search-form round">
+      <text class="cuIcon-search"></text>
+      <input type="text" placeholder="输入快递单号（支持模糊搜索）" confirm-type="search" name='input'></input>
     </view>
-    <view class='bottom-20'>{{item[3]}} {{item[1]}}</view>
-    <view>{{item[5]}} {{item[2]}}</view>
+    <view class="action">
+      <button class="cu-btn bg-blue light" form-type="submit">搜索</button>
+    </view>
+  </view>
+</form>
+
+<view class="good-list">
+  <view wx:if='{{search}}' class="text-center" style='margin-top:20rpx'>
+    <button wx:if='{{q_search.length > 0}}' class="cu-btn round bg-blue light" bindtap='returnall'>返回查看所有包裹</button>
+    <button wx:else class="cu-btn round bg-blue light v-center" bindtap='returnall'>暂无结果，返回查看所有包裹</button>
   </view>
   <view class="divLine"></view>
+
+  <view wx:for="{{search? q_search: goods_list}}" wx:key>
+    <view class='flex-goods'>
+      <view class='bottom-20'>
+        <text>{{item[4]}}</text>
+      </view>
+      <view class='bottom-20'>{{item[3]}} {{item[1]}}</view>
+      <view>{{item[5]}} {{item[2]}}</view>
+    </view>
+    <view class="divLine"></view>
+  </view>
 </view>

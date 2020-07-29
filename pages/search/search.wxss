@@ -1,3 +1,20 @@
+.search {
+  position: fixed;
+  left: 0;
+  right: 0;
+  background-color: #fff;
+  z-index: 4;
+}
+.padd-top {
+  padding-top: 350rpx;
+}
+.return-botton {
+  padding-bottom: 60rpx;
+}
+.button-center {
+  padding-top: 30rpx;
+  text-align: center;
+}
 .self-pix {
   width:40rpx;
   height:40rpx;

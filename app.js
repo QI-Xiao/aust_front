@@ -212,7 +212,7 @@ App({
     Hrpxleft: 0,
     // domain: 'http://127.0.0.1:8000/aust/',
     domain: 'https://aus.python666.cn/aust/',
-    version: '1.1.6',
+    version: '1.2.0',
     info_address: '',
     info_person: [],
     info_phone: '',

@@ -2,25 +2,48 @@
 <block wx:else>
   <view wx:if="{{!is_staff}}">
     <view wx:if="{{is_identified == 2}}">
-      <view wx:if='{{text_list}}' class='text-center link-css' bindtap="depot_address" style="margin-bottom: 30rpx;">{{text_list[0]}}</view>
-      <view class='text-center link-css' bindtap="notice" style="margin-bottom: 30rpx;">{{notice_title}}</view>
-      <view class="divLine"></view>
-      <button wx:if='{{goods_list.length == 0}}' class='no-user2' disabled='true'>暂无最近记录</button>
-      <view wx:else>
-        <view wx:for="{{goods_list}}" wx:key>
+      <view class="search">
+        <view wx:if='{{text_list}}' class='text-center link-css' bindtap="depot_address" style="margin-bottom: 30rpx;">{{text_list[0]}}</view>
+        <view class='text-center link-css' bindtap="notice" style="margin-bottom: 30rpx;">{{notice_title}}</view>
+        <form bindsubmit="formSubmit" class="search">
+          <view class="cu-bar bg-white">
+            <view class="search-form round">
+              <text class="cuIcon-search"></text>
+              <input type="text" placeholder="输入快递单号（支持模糊搜索）" confirm-type="search" name='input'></input>
+            </view>
+            <view class="action">
+              <button class="cu-btn bg-blue light" form-type="submit">搜索</button>
+            </view>
+          </view>
+        </form>
+      </view>
+
+      <view class="padd-top">
+        <view wx:if='{{search}}' class="button-center">
+          <view class="return-botton">
+            <button wx:if='{{q_search.length > 0}}' class="cu-btn round bg-blue light" bindtap='returnall'>返回查看最新签收包裹</button>
+            <button wx:else class="cu-btn round bg-blue light v-center" bindtap='returnall'>暂无结果，返回查看最新签收包裹</button>
+          </view>
+          <view class="divLine"></view>
+        </view>
+        <view wx:else>
+          <view class="divLine"></view>
+          <button wx:if='{{goods_list.length == 0}}' class='no-user2' disabled='true'>暂无最近记录</button>
+        </view>
+
+        <view wx:for="{{search? q_search: goods_list}}" wx:key>
           <view class='flex-goods'>
             <view class='flex-1 bottom-20'>
               <text>{{item[4]}}</text>
-              <text class="cuIcon-roundclosefill lg text-red" bindtap="deleteitem" data-id='{{item[0]}}' data-index='{{index}}'></text>
+              <text wx:if='{{!search}}' class="cuIcon-roundclosefill lg text-red" bindtap="deleteitem" data-id='{{item[0]}}' data-index='{{index}}'></text>
             </view>
             <view class='bottom-20'>{{item[3]}} {{item[1]}}</view>
             <view>{{item[5]}} {{item[2]}} <text class='refund-text' wx:if='{{item[6]}}'> 请联系客服 </text></view>
           </view>
           <view class="divLine"></view>
         </view>
+        <view wx:if='{{!search}}' class='text-center link-css' bindtap="all_goods">以上是最新签收包裹，查看更多包裹请点击这里</view>
       </view>
-      <view class='text-center link-css' bindtap="all_goods">以上是最新签收包裹，查看更多包裹请点击这里</view>
-
     </view>
     <button class='no-user2' wx:elif="{{is_identified == 0}}" disabled='true'>首页"获取用户编号"并通过审核后查看</button>
     <button class='no-user2' wx:elif="{{is_identified == 1}}" disabled='true'>通过审核后可查看</button>
